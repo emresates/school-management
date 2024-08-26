@@ -1,3 +1,7 @@
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+
+// Burdaki sidebar yapısı düzenlenmeli
 export default function PrivateLayout({
   children,
 }: Readonly<{
@@ -5,8 +9,13 @@ export default function PrivateLayout({
 }>) {
   return (
     <div className="h-screen flex">
-      <div className="w-1/6 mobile:w-1/12 tablet:w-1/6 ">Left</div>
-      <div className="w-5/6 mobile:w-11/12 tablet:w-5/6">{children}</div>
+      <div className="w-1/6 mobile:w-1/12 tablet:w-1/6 ">
+        <Sidebar />
+      </div>
+      <div className="w-5/6 mobile:w-11/12 tablet:w-5/6 overflow-y-auto">
+        <Navbar />
+        {children}
+      </div>
     </div>
   );
 }

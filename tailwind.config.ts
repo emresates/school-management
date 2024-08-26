@@ -2,8 +2,8 @@
 
 module.exports = {
   content: [
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -90,6 +90,25 @@ module.exports = {
         "3xl": "1.25rem", // 20px
         "4xl": "1.5rem", // 24px
         full: "9999px",
+      },
+      spacing: {
+        none: "0",
+        xxs: "0.125rem", // 2px
+        xs: "0.25rem", // 4px
+        sm: "0.375rem", // 6px
+        md: "0.5rem", // 8px
+        lg: "0.75rem", // 12px
+        xl: "1rem", // 16px
+        "2xl": "1.25rem", // 20px
+        "3xl": "1.5rem", // 24px
+        "4xl": "2rem", // 32px
+        "5xl": "2.5rem", // 40px
+        "6xl": "3rem", // 48px
+        "7xl": "4rem", // 64px
+        "8xl": "5rem", // 80px
+        "9xl": "6rem",
+        "10xl": "8rem",
+        "11xl": "10rem",
       },
     },
   },
