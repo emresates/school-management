@@ -14,6 +14,12 @@ module.exports = {
           DEFAULT: "#363F72",
           100: "#363F72",
         },
+        forest: {
+          DEFAULT: "#2C5F2D",
+        },
+        moss: {
+          DEFAULT: "#97BC62",
+        },
       },
 
       screens: {

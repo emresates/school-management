@@ -3,8 +3,8 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <div className="flexicjb p-4">
-      <div className="flexic gap-1 h-8 overflow-hidden rounded-md border bg-green-50 px-2">
+    <div className="flexicjb border-b p-4 shadow-xs">
+      <div className="flexic h-8 gap-1 overflow-hidden rounded-md border bg-green-50 px-2">
         <Image
           src="/images/search.png"
           alt="search image"
@@ -16,7 +16,7 @@ const Navbar = () => {
         <input
           type="text"
           placeholder="Search"
-          className="w-[200px] bg-transparent outline-none text-sm"
+          className="w-[200px] bg-transparent text-sm outline-none"
         />
       </div>
 
