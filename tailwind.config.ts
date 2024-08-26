@@ -1,20 +1,98 @@
-import type { Config } from "tailwindcss";
+/** @type {import('tailwindcss').Config} */
 
-const config: Config = {
+module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {},
+      colors: {
+        primary: {
+          DEFAULT: "#363F72",
+          100: "#363F72",
+        },
+      },
+
+      screens: {
+        xxs: "325px",
+        xs: "450px",
+
+        mobile: "640px",
+        // => @media (min-width: 640px) { ... }
+
+        tablet: "768px",
+        // => @media (min-width: 768px) { ... }
+
+        desktop: "1024px",
+        // => @media (min-width: 1024px) { ... }
+
+        xl: "1280px",
+        // => @media (min-width: 1280px) { ... }
+
+        "2xl": "1440px",
+        // => @media (min-width: 1440px) { ... }
+
+        "3xl": "1920px",
+      },
+
+      fontWeight: {
+        light: "300",
+        regular: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
+      },
+
+      fontSize: {
+        xl: [
+          "20px",
+          {
+            lineHeight: "30px",
+          },
+        ],
+        lg: [
+          "18px",
+          {
+            lineHeight: "28px",
+          },
+        ],
+        md: [
+          "16px",
+          {
+            lineHeight: "24px",
+          },
+        ],
+        sm: [
+          "14px",
+          {
+            lineHeight: "20px",
+          },
+        ],
+        xs: ["12px"],
+        xxs: ["10px"],
+      },
+      boxShadow: {
+        xs: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
+      },
+      borderRadius: {
+        none: "0",
+        xxs: "0.125rem", // 2px
+        xs: "0.25rem", // 4px
+        DEFAULT: "4px", // 4px
+        sm: "0.375rem", // 6px
+        md: "0.5rem", // 8px
+        lg: "0.625rem", // 10px
+        xl: "0.75rem", // 12px
+        "2xl": "1rem", // 16px
+        "3xl": "1.25rem", // 20px
+        "4xl": "1.5rem", // 24px
+        full: "9999px",
       },
     },
   },
+  darkMode: "class",
   plugins: [],
 };
-export default config;
