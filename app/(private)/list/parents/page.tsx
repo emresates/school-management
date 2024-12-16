@@ -5,6 +5,7 @@ import Pagination from "../_components/Pagination";
 import Table from "../_components/Table";
 import Link from "next/link";
 import { role, parentsData } from "@/app/lib/data";
+import FormModal from "@/components/FormModal.tsx";
 
 type Parent = {
   id: number;
@@ -58,15 +59,14 @@ const ParentsList = () => {
       <td className="hidden tablet:table-cell">{item?.address}</td>
       <td>
         <div className="flexic gap-2">
-          <Link href={`/list/teachers/${item.id}`}>
-            <button className="flexicjc h-7 w-7 rounded-full bg-blue-200">
-              <Image src="/images/edit.png" alt="" width={14} height={14} />
-            </button>
-          </Link>
           {role === "admin" && (
-            <button className="flexicjc h-7 w-7 rounded-full bg-red-200">
-              <Image src="/images/delete.png" alt="" width={14} height={14} />
-            </button>
+            // <button className="flexicjc h-7 w-7 rounded-full bg-red-200">
+            //   <Image src="/images/delete.png" alt="" width={14} height={14} />
+            // </button>
+            <>
+              <FormModal table="parent" type="update" data={item} />
+              <FormModal table="parent" type="delete" id={item?.id} />
+            </>
           )}
         </div>
       </td>
@@ -86,11 +86,7 @@ const ParentsList = () => {
             <button className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-200">
               <Image src="/images/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && (
-              <button className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-200">
-                <Image src="/images/plus.png" alt="" width={14} height={14} />
-              </button>
-            )}
+            {role === "admin" && <FormModal table="parent" type="create" />}
           </div>
         </div>
       </div>
