@@ -3,7 +3,7 @@ import EventCalendar from "../admin/_components/EventCalendar";
 import Announcements from "../admin/_components/Announcements";
 import BigCalendar from "../student/_components/BigCalender";
 
-const TeacherPage = () => {
+const ParentPage = () => {
   return (
     <div className="flex gap-4 p-4">
       <div className="w-2/3">
@@ -20,4 +20,4 @@ const TeacherPage = () => {
   );
 };
 
-export default TeacherPage;
+export default ParentPage;
