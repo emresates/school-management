@@ -3,7 +3,7 @@ import React from "react";
 import Announcements from "../../admin/_components/Announcements";
 import Link from "next/link";
 import BigCalendar from "../../student/_components/BigCalender";
-import { PieChartComponent } from "../../teacher/_components/PieChart";
+import { PieChartComponent } from "@/components/Chart/PieChart";
 
 const SingleStudentPage = () => {
   return (

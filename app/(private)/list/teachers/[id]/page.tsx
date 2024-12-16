@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import Announcements from "../../admin/_components/Announcements";
+import Announcements from "../../../admin/_components/Announcements";
 import Link from "next/link";
-import { PieChartComponent } from "../_components/PieChart";
-import BigCalendar from "../../student/_components/BigCalender";
+import BigCalendar from "../../../student/_components/BigCalender";
+import FormModal from "@/components/FormModal.tsx";
+import { PieChartComponent } from "@/components/Chart/PieChart";
 
 const SingleTeacherPage = () => {
   return (
@@ -24,7 +25,14 @@ const SingleTeacherPage = () => {
               />
             </div>
             <div className="flex w-2/3 flex-col justify-between gap-4">
-              <h1 className="text-xl font-semibold">Cıkır Tıkır</h1>
+              <div className="flexicjs gap-1">
+                <h1 className="text-xl font-semibold">Cıkır Tıkır</h1>
+                <FormModal
+                  table="teacher"
+                  type="update"
+                  data={{ username: "Cıkır Tıkır" }}
+                />
+              </div>
               <p className="text-sm text-gray-500">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
               </p>
