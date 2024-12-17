@@ -3,21 +3,13 @@ import React from "react";
 import TableSearch from "../_components/TableSearch";
 import Pagination from "../_components/Pagination";
 import Table from "../_components/Table";
-import Link from "next/link";
-import { role, teachersData } from "@/app/lib/data";
+import { role } from "@/app/lib/data";
 import FormModal from "@/components/FormModal.tsx";
+import { Class, Subject, Teacher } from "@prisma/client";
+import prisma from "@/app/lib/prisma";
+import { ITEM_PER_PAGE } from "@/app/lib/settings";
 
-type Teacher = {
-  id: number;
-  teacherId: string;
-  name: string;
-  email?: string;
-  photo: string;
-  phone: string;
-  subjects: string[];
-  classes: string[];
-  address: string;
-};
+type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
 const columns = [
   {
@@ -55,42 +47,65 @@ const columns = [
   },
 ];
 
-const TeachersList = () => {
-  const renderRow = (item: Teacher) => (
-    <tr
-      key={item?.id}
-      className="border-grayy-200 border-b text-sm transition-all even:bg-slate-50 hover:bg-purple-100"
-    >
-      <td className="flexic gap-2 p-2">
-        <Image
-          src={item.photo}
-          alt={item.name}
-          width={40}
-          height={40}
-          className="h-10 w-10 rounded-full object-cover tablet:hidden desktop:block"
-        />
-        <div className="flex flex-col">
-          <h3 className="text-md-semibold">{item?.name}</h3>
-          <h4 className="text-xs-regular text-gray-500">{item?.email}</h4>
-        </div>
-      </td>
-      <td className="hidden tablet:table-cell">{item?.teacherId}</td>
-      <td className="hidden tablet:table-cell">{item?.subjects?.join(", ")}</td>
-      <td className="hidden tablet:table-cell">{item?.classes?.join(", ")}</td>
-      <td className="hidden tablet:table-cell">{item?.phone}</td>
-      <td className="hidden tablet:table-cell">{item?.address}</td>
-      <td>
-        <div className="flexic gap-2">
-          {role === "admin" && (
-            <>
-              <FormModal table="teacher" type="update" data={item} />
-              <FormModal table="teacher" type="delete" id={item?.id} />
-            </>
-          )}
-        </div>
-      </td>
-    </tr>
-  );
+const renderRow = (item: TeacherList) => (
+  <tr
+    key={item?.id}
+    className="border-grayy-200 border-b text-sm transition-all even:bg-slate-50 hover:bg-purple-100"
+  >
+    <td className="flexic gap-2 p-2">
+      <Image
+        src={item.img || "/images/avatar.png"}
+        alt={item.name}
+        width={40}
+        height={40}
+        className="h-10 w-10 rounded-full object-cover tablet:hidden desktop:block"
+      />
+      <div className="flex flex-col">
+        <h3 className="text-md-semibold">{item?.name}</h3>
+        <h4 className="text-xs-regular text-gray-500">{item?.email}</h4>
+      </div>
+    </td>
+    <td className="hidden tablet:table-cell">{item?.username}</td>
+    <td className="hidden tablet:table-cell">
+      {item?.subjects?.map((subject) => subject.name).join(",")}
+    </td>
+    <td className="hidden tablet:table-cell">
+      {item?.classes?.map((singleClass) => singleClass.name).join(",")}
+    </td>
+    <td className="hidden tablet:table-cell">{item?.phone}</td>
+    <td className="hidden tablet:table-cell">{item?.address}</td>
+    <td>
+      <div className="flexic gap-2">
+        {role === "admin" && (
+          <>
+            <FormModal table="teacher" type="update" data={item} />
+            <FormModal table="teacher" type="delete" id={item?.id} />
+          </>
+        )}
+      </div>
+    </td>
+  </tr>
+);
+
+const TeachersList = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string } | undefined;
+}) => {
+  const { page, ...queryParams } = searchParams || {};
+  const p = page ? parseInt(page) : 1;
+
+  const [data, count] = await prisma.$transaction([
+    prisma.teacher.findMany({
+      include: {
+        subjects: true,
+        classes: true,
+      },
+      take: ITEM_PER_PAGE,
+      skip: p * ITEM_PER_PAGE - ITEM_PER_PAGE,
+    }),
+    prisma.teacher.count(),
+  ]);
 
   return (
     <div className="m-4 mt-0 flex-1 rounded-md bg-white p-4">
@@ -115,8 +130,8 @@ const TeachersList = () => {
           </div>
         </div>
       </div>
-      <Table columns={columns} renderRow={renderRow} data={teachersData} />
-      <Pagination />
+      <Table columns={columns} renderRow={renderRow} data={data} />
+      <Pagination page={p} count={count} />
     </div>
   );
 };
