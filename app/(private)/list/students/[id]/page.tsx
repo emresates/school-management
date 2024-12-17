@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React from "react";
-import Announcements from "../../admin/_components/Announcements";
 import Link from "next/link";
-import BigCalendar from "../../student/_components/BigCalender";
 import { PieChartComponent } from "@/components/Chart/PieChart";
+import Announcements from "@/app/(private)/admin/_components/Announcements";
+import BigCalendar from "@/app/(private)/student/_components/BigCalender";
 
 const SingleStudentPage = () => {
   return (
@@ -132,7 +132,7 @@ const SingleStudentPage = () => {
 
         {/* Bottom */}
         <div className="mt-4 h-[800px] rounded-md bg-white p-4">
-          <h1>Teacher&apos;s Schedule</h1>
+          <h1>Student&apos;s Schedule</h1>
           <BigCalendar />
         </div>
       </div>
@@ -146,7 +146,7 @@ const SingleStudentPage = () => {
             <Link href="/" className="rounded-md bg-yellow-100 p-3">
               Student&apos;s Lessons
             </Link>
-            <Link href="/" className="rounded-md bg-blue-100 p-3">
+            <Link href={`/list/teachers?classId=${2}`} className="rounded-md bg-blue-100 p-3">
               Student&apos;s Teachers
             </Link>
             <Link href="/" className="rounded-md bg-red-100 p-3">
