@@ -1,7 +1,11 @@
+import { UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import React from "react";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const user = await currentUser();
+
   return (
     <div className="flexicjb border-b p-4 shadow-xs">
       <div className="flexic h-8 gap-1 overflow-hidden rounded-md border bg-green-50 px-2">
@@ -41,15 +45,19 @@ const Navbar = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-xs-medium">Emre Ates</p>
-          <span className="text-right text-xxs text-gray-400">Admin</span>
+          <span className="text-right text-xxs capitalize text-gray-400">
+            {user?.publicMetadata?.role as string}
+          </span>
         </div>
-        <Image
+        {/* <Image
           src="/images/avatar.png"
           alt="profile image"
           width={50}
           height={50}
           className="h-8 w-8 rounded-full border"
-        />
+        /> */}
+
+        <UserButton />
       </div>
     </div>
   );

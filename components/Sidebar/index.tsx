@@ -1,4 +1,5 @@
 import { menuItems, role } from "@/app/lib/data";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,7 +7,11 @@ import React from "react";
 // Büyütülebilir küçültülebilir olmalı
 // Responsive e göre düzenlenmeli
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const user = await currentUser();
+
+  const role = user?.publicMetadata?.role as string;
+
   return (
     <div className="h-full border-r p-xl shadow-sm">
       <Link href="/" className="flexicjc gap-2 tablet:justify-start">
