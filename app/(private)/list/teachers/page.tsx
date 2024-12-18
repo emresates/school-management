@@ -121,6 +121,9 @@ const TeachersList = async ({
             contains: value,
             mode: "insensitive",
           };
+          break;
+        default:
+          break;
       }
     }
   }
