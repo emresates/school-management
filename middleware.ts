@@ -13,7 +13,6 @@ export default clerkMiddleware(async (auth, req) => {
   //   if (isProtectedRoute(req)) await auth.protect();
 
   const { sessionClaims } = await auth();
-  console.log("sessionClaims", sessionClaims);
 
   const role = (sessionClaims?.metadata as { role?: string })?.role;
 

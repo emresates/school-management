@@ -3,60 +3,15 @@ import React from "react";
 import TableSearch from "../_components/TableSearch";
 import Pagination from "../_components/Pagination";
 import Table from "../_components/Table";
-import Link from "next/link";
-import { role, announcementsData } from "@/app/lib/data";
 import FormModal from "@/components/FormModal.tsx";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
+import { getRole } from "@/app/lib/utils";
 
 type AnnouncementsList = Announcement & {
   class: Class;
 };
-
-const columns = [
-  {
-    header: "Title",
-    accessor: "title",
-  },
-  {
-    header: "Class",
-    accessor: "class",
-    className: "hidden tablet:table-cell",
-  },
-  {
-    header: "Date",
-    accessor: "date",
-    className: "hidden tablet:table-cell",
-  },
-  {
-    header: "Actions",
-    accessor: "actions",
-  },
-];
-
-const renderRow = (item: AnnouncementsList) => (
-  <tr
-    key={item?.id}
-    className="border-grayy-200 border-b text-sm transition-all even:bg-slate-50 hover:bg-purple-100"
-  >
-    <td className="hidden gap-4 p-4 tablet:table-cell">{item?.title}</td>
-    <td className="hidden tablet:table-cell">{item?.class.name}</td>
-    <td className="hidden tablet:table-cell">
-      {new Intl.DateTimeFormat("en-us").format(item?.date)}
-    </td>
-    <td>
-      <div className="flexic gap-2">
-        {role === "admin" && (
-          <>
-            <FormModal table="announcement" type="update" data={item} />
-            <FormModal table="announcement" type="delete" id={item?.id} />
-          </>
-        )}
-      </div>
-    </td>
-  </tr>
-);
 
 const AnnouncementsList = async ({
   searchParams,
@@ -69,6 +24,49 @@ const AnnouncementsList = async ({
   // URL PARAMS CONDITIONS
 
   const query: Prisma.AnnouncementWhereInput = {};
+
+  const { role } = await getRole();
+
+  const columns = [
+    {
+      header: "Title",
+      accessor: "title",
+    },
+    {
+      header: "Class",
+      accessor: "class",
+      className: "hidden tablet:table-cell",
+    },
+    {
+      header: "Date",
+      accessor: "date",
+      className: "hidden tablet:table-cell",
+    },
+    ...(role === "admin" ? [{ header: "Actions", accessor: "actions" }] : []),
+  ];
+
+  const renderRow = (item: AnnouncementsList) => (
+    <tr
+      key={item?.id}
+      className="border-grayy-200 border-b text-sm transition-all even:bg-slate-50 hover:bg-purple-100"
+    >
+      <td className="hidden gap-4 p-4 tablet:table-cell">{item?.title}</td>
+      <td className="hidden tablet:table-cell">{item?.class.name}</td>
+      <td className="hidden tablet:table-cell">
+        {new Intl.DateTimeFormat("en-us").format(item?.date)}
+      </td>
+      <td>
+        <div className="flexic gap-2">
+          {role === "admin" && (
+            <>
+              <FormModal table="announcement" type="update" data={item} />
+              <FormModal table="announcement" type="delete" id={item?.id} />
+            </>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
 
   if (queryParams) {
     for (const [key, value] of Object.entries(queryParams)) {

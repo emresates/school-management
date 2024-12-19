@@ -45,7 +45,7 @@ const Navbar = async () => {
         </div>
         <div className="flex flex-col">
           <p className="text-xs-medium">Emre Ates</p>
-          <span className="text-right text-xxs capitalize text-gray-400">
+          <span className="text-gray-400vivikaon text-right text-xxs capitalize">
             {user?.publicMetadata?.role as string}
           </span>
         </div>
